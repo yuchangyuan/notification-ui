@@ -113,7 +113,7 @@ _n.create = function(c, serv) {
     ndiv.append(nstatus);
 
     // add to body
-    $('body').prepend(ndiv);
+    $('body div:first').after(ndiv);
     _n.window_fit();
     ndiv.hide();
     ndiv.show("fast");
