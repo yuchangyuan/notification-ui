@@ -195,7 +195,7 @@ _n.update = function(c, serv) {
                    new Date(c.timestamp).toISOString() +
                    "</span>");
 
-    // _n.window_fit();
+    _n.window_fit();
 }
 
 
