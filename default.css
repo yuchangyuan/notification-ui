@@ -1,0 +1,134 @@
+body {
+    margin: 0px;
+    width: 400px;
+    
+    /* background-color: rgba(255, 255, 255, 0.1); */
+    
+    /* for body height */
+    float:left;
+}
+
+.notification {
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    border-radius: 0.5em;
+
+    -webkit-background-clip: padding-box;
+
+    border-style: solid;
+    border-width: 1px;
+
+    padding: 5px;
+    margin: 5px 0px 10px 0px;
+    width: 100%;
+
+    position: relative;
+}
+
+.notification-title {
+    background-color: rgba(255,255,255, 0.3);
+    -moz-border-radius: 0.2em;
+    -webkit-border-radius: 0.2em;
+    border-radius: 0.2em;
+    margin: 0.4em 0em 0.4em 0em;
+    padding: 0.2em 1em 0.2em 1em;
+    font-size: 120%;
+}
+
+.notification-body {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.notification-status {
+    font-size: 0.75em;
+    font-style: italic;
+    color: rgba(0,0,0, 0.5);
+    margin-top: 1em;
+
+    position: relative;
+}
+
+button {
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-style: solid;
+
+    -moz-border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;
+    border-radius: 0.4em;
+}
+
+
+button:hover {
+    border-color: rgba(255,255,255, 0.75);
+    background-color: rgba(255,255,255, 0.75);
+}
+
+button:active {
+    background-color: rgba(0,0,0, 0);
+}
+
+.close-button {
+    position: absolute;
+    right: 0.25em;
+    top: 0.25em;
+    width: 1em;
+    height: 1em;
+
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+
+    padding: 0px;
+}
+
+
+.toolbar {
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    border-radius: 0.5em;
+
+    -webkit-background-clip: padding-box;
+
+    border-style: solid;
+    border-width: 1px;
+
+    border-color: rgba(200,200,255, 0.2);
+    background-color: rgba(200,200,255, 0.2);
+
+    padding: 2px 5px 2px 5px;
+    margin: 5px 0px 5px 0px;
+
+    width: 100%;
+    font-size: 0.75em;
+}
+
+.toolbar a {
+    padding: 0em 0.5em 0em 0.5em;
+    margin: 0em 0.2em 0em 0.2em;
+    
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+
+/* default theme */
+.notification {
+    border-color: rgba(0, 0, 255, 0.8);
+    background-color: rgba(160, 200, 255, 0.8);
+}
+
+.normal-urgency {
+}
+
+.low-urgency {
+    border-color: rgba(128, 128, 128, 0.8);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.critical-urgency {
+    border-color: rgba(255, 0, 0, 0.8);
+    background-color: rgba(255, 128, 128, 0.8);
+}
