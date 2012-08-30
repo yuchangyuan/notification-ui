@@ -1,0 +1,10 @@
+#+title: Notification UI
+
+An application that show some notifications on desktop.
+
+*NOTE*: This application is under development.
+
+* Prerequest
+- qtjambi 4.7
+- scala 2.9.1
+* TODO Run
