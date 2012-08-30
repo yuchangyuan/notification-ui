@@ -58,7 +58,7 @@ _n.create = function(c, serv) {
     // add close button
     var nclose = $("<button class='close-button'></button>");
     nclose.click(function() {
-        ndiv.fadeOut("fast", function() {
+        ndiv.hide("fast", function() {
             $(this).remove();
             _n.window_fit();
         });
@@ -114,8 +114,9 @@ _n.create = function(c, serv) {
 
     // add to body
     $('body').prepend(ndiv);
-
     _n.window_fit();
+    ndiv.hide();
+    ndiv.show("fast");
 }
 
 
@@ -194,7 +195,7 @@ _n.update = function(c, serv) {
                    new Date(c.timestamp).toISOString() +
                    "</span>");
 
-    _n.window_fit();
+    // _n.window_fit();
 }
 
 
