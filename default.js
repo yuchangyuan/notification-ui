@@ -119,6 +119,85 @@ _n.create = function(c, serv) {
 }
 
 
+_n.update = function(c, serv) {
+    /* check */
+    if (c.command != "update") return false;
+    if ((c.uuid === undefined) ||
+        (c.timestamp === undefined)) return false;
+
+    // get top div
+    var ndiv = $("div#" + c.uuid);
+    if (ndiv.size() == 0) return false;
+
+    // update div class
+    if ($.isArray(c.notification_class)) {
+        var ndiv_class = ["notification"].concat(c.notification_class);
+        ndiv.attr("class", ndiv_class.join(" "));
+    }
+
+    // update title class
+    var ntitle = $("div.notification-title", ndiv);
+    if (ntitle.size() == 0) return false;
+    if ($.isArray(c.title_class)) {
+        ntitle_class = ["notification-title"].concat(c.title_class);
+        ntitle.attr("class", ntitle_class.join(" "));
+    }
+    
+    // update title
+    if (c.title !== undefined) {
+        ntitle.empty();
+        ntitle.append(c.title);
+    }
+    
+    // update body
+    var nbody = $("div.notification-body", ndiv);
+
+    if (c.body !== undefined) {
+        if (nbody.size() == 0) {
+            nbody = $("<div></div>");
+            nbody.attr("class", "notification-body");
+            // add to ndiv
+            ntitle.after(nbody);
+        }
+
+        nbody.empty();
+        nbody.append(c.body);
+        
+        // replace button id
+        $("button", nbody).each(function (i) {
+            var id = $(this).attr("id");
+            if (id === "") { id = "__button" + i; }
+            id = c.uuid + "_" + id;
+            $(this).attr("id", id);
+        });
+
+        // replace link
+        $("a", nbody).each(function (i) {
+            var id = $(this).attr("id");
+            if (id === "") { id = "__a" + i; }
+            id = c.uuid + "_" + id;
+            $(this).attr("id", id);
+        });
+    }
+
+    if ($.isArray(c.body_class)) {
+        if (nbody.size() > 0) {
+            var nbody_class = ['notification-body'].concat(c.body_class);
+            nbody.attr("class", nbody_class.join(" "));
+        }
+    }
+
+    // update status
+    var nstatus = $("div.notification-status", ndiv);
+    $("span:last", nstatus).remove();
+    nstatus.append("<span style='position:absolute; right: 1em;'>" +
+                   new Date(c.timestamp).toISOString() +
+                   "</span>");
+
+    _n.window_fit();
+}
+
+
 $(function() {
     _n.window_reset();
     _n.window_fit();
