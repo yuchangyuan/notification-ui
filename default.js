@@ -151,6 +151,7 @@ _n.update = function(c) {
     if ($.isArray(c.notification_class)) {
         var ndiv_class = ["notification"].concat(c.notification_class);
         ndiv.attr("class", ndiv_class.join(" "));
+        _n.data[c.uuid].notification_class = c.notification_class;
     }
 
     // update title class
@@ -159,12 +160,14 @@ _n.update = function(c) {
     if ($.isArray(c.title_class)) {
         ntitle_class = ["notification-title"].concat(c.title_class);
         ntitle.attr("class", ntitle_class.join(" "));
+        _n.data[c.uuid].title_class = c.title_class;
     }
     
     // update title
     if (c.title !== undefined) {
         ntitle.empty();
         ntitle.append(c.title);
+        _n.data[c.uuid].title = c.title;
     }
     
     // update body
@@ -180,6 +183,7 @@ _n.update = function(c) {
 
         nbody.empty();
         nbody.append(c.body);
+        _n.data[c.uuid].body = c.body;
         
         // replace button id
         $("button", nbody).each(function (i) {
@@ -202,6 +206,7 @@ _n.update = function(c) {
         if (nbody.size() > 0) {
             var nbody_class = ['notification-body'].concat(c.body_class);
             nbody.attr("class", nbody_class.join(" "));
+            _n.data[c.uuid].body_class = c.body_class;
         }
     }
 
@@ -211,6 +216,7 @@ _n.update = function(c) {
     nstatus.append("<span style='position:absolute; right: 1em;'>" +
                    new Date(c.timestamp).toISOString() +
                    "</span>");
+    _n.data[c.uuid].timestamp = c.timestamp;
 
     _n.window_fit();
 }
