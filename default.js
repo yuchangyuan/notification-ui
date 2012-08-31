@@ -131,7 +131,9 @@ _n.create = function(c, serv) {
     $('body div:first').after(ndiv);
     _n.window_fit();
     ndiv.hide();
-    ndiv.show("fast");
+    ndiv.show("fast", function() {
+        _n.window_fit();
+    });
 }
 
 
