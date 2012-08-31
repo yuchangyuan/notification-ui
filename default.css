@@ -9,8 +9,6 @@ body {
 }
 
 .notification {
-    -moz-border-radius: 0.5em;
-    -webkit-border-radius: 0.5em;
     border-radius: 0.5em;
 
     -webkit-background-clip: padding-box;
@@ -27,8 +25,6 @@ body {
 
 .notification-title {
     background-color: rgba(255,255,255, 0.3);
-    -moz-border-radius: 0.2em;
-    -webkit-border-radius: 0.2em;
     border-radius: 0.2em;
     margin: 0.4em 0em 0.4em 0em;
     padding: 0.2em 1em 0.2em 1em;
@@ -55,8 +51,6 @@ button {
     background-color: rgba(255, 255, 255, 0.5);
     border-style: solid;
 
-    -moz-border-radius: 0.4em;
-    -webkit-border-radius: 0.4em;
     border-radius: 0.4em;
 }
 
@@ -77,8 +71,6 @@ button:active {
     width: 1em;
     height: 1em;
 
-    -moz-border-radius: 1em;
-    -webkit-border-radius: 1em;
     border-radius: 1em;
 
     padding: 0px;
@@ -86,8 +78,6 @@ button:active {
 
 
 .toolbar {
-    -moz-border-radius: 0.5em;
-    -webkit-border-radius: 0.5em;
     border-radius: 0.5em;
 
     -webkit-background-clip: padding-box;
