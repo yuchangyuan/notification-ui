@@ -33,7 +33,7 @@ _test.add_notification = function() {
     window.setTimeout(function () { _n.create(n1, "local"); }, 0);
     window.setTimeout(function () { _n.create(n2, "local"); }, 1000);    
     window.setTimeout(function () { _n.create(n3, "local"); }, 2000);    
-}
+};
 
 _test.update_notification = function() {
     var up1 = {
@@ -54,5 +54,10 @@ _test.update_notification = function() {
     window.setTimeout(function () { _n.update(up1); }, 500);
     window.setTimeout(function () { _n.update(up2); }, 1500);
 
-}
+};
 
+_test.close_notification = function() {
+    _n.close({'command': 'close', 
+              'uuid': 'e4c9b371-2271-492d-a55c-daae76467262',
+              'timestamp': new Date().getTime()});
+};

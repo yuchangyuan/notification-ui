@@ -1,5 +1,7 @@
 var _n = {};
 
+// notification data
+_n.data = {};
 
 _n.window_reset = function() {
     window.moveTo(window.screen.width - 440, 20);
@@ -37,6 +39,9 @@ _n.create = function(c, serv) {
         (c.client === undefined) ||
         (c.title === undefined)) return false;
 
+    // TODO: do security check for argument,
+    // especially to avoid inline script
+
     // hack
     if (c.title_class === undefined) c.title_class = [];
     if (c.body_class === undefined) c.body_class = [];
@@ -45,6 +50,15 @@ _n.create = function(c, serv) {
     if (!$.isArray(c.title_class) ||
         !$.isArray(c.body_class) ||
         !$.isArray(c.notification_class)) return false;    
+
+    // save to _n.data
+    var data = {};
+    for (var key in c) {
+        data[key] = c[key];
+    }
+    delete data.command;
+    data.server = serv;
+    _n.data[c.uuid] = data;
 
     // create top div
     var ndiv_class = ["notification"];
@@ -60,6 +74,7 @@ _n.create = function(c, serv) {
     nclose.click(function() {
         ndiv.hide("fast", function() {
             $(this).remove();
+            delete _n.data[c.uuid];
             _n.window_fit();
         });
     });
@@ -120,11 +135,13 @@ _n.create = function(c, serv) {
 }
 
 
-_n.update = function(c, serv) {
+_n.update = function(c) {
     /* check */
     if (c.command != "update") return false;
     if ((c.uuid === undefined) ||
         (c.timestamp === undefined)) return false;
+
+    // TODO: security check
 
     // get top div
     var ndiv = $("div#" + c.uuid);
@@ -198,6 +215,18 @@ _n.update = function(c, serv) {
     _n.window_fit();
 }
 
+
+_n.close = function(c) {
+    if (c.command != "close") return false;
+    if ((c.uuid === undefined) ||
+        (c.timestamp === undefined)) return false;
+
+    $("div#" + c.uuid).hide("fast", function() {
+        $(this).remove();
+        delete _n.data[c.uuid];
+        _n.window_fit();
+    });
+};
 
 $(function() {
     _n.window_reset();
