@@ -5,6 +5,11 @@ import java.awt.Desktop
 import java.io.File
 import java.net.URI
 
+import org.java_websocket.client.WebSocketClient
+import org.java_websocket.handshake.ServerHandshake
+
+import com.trolltech.qt.QSignalEmitter._
+
 object NotificaionUI {
   def browse(url: String) = {
     try {
@@ -30,6 +35,76 @@ object NotificaionUI {
         else {
           TopWindow.this.hide()
         }
+      }
+    }
+
+    var websocket: WebSocket = null
+    class WebSocket extends JWebSocket {
+      import QEvent.Type
+
+      var map: Map[String, WebSocketClient] = Map()
+      val jws = this
+
+      case class OpenEvent(uri: String) extends QEvent(Type.CustomEnum)
+      case class MessageEvent(uri: String,
+        msg: String) extends QEvent(Type.CustomEnum)
+      case class CloseEvent(uri: String, code: Int, reason: String,
+        remote: Boolean) extends QEvent(Type.CustomEnum)
+      case class ErrorEvent(uri: String, ex: String)
+           extends QEvent(Type.CustomEnum)
+
+      def createWebSocket(uri: String): String = {
+        val ws = new WebSocketClient(new URI(uri)) {
+          def onMessage(msg: String): Unit = {
+            QCoreApplication.postEvent(jws, MessageEvent(uri, msg))
+          }
+
+          def onOpen(h: ServerHandshake): Unit = {
+            QCoreApplication.postEvent(jws, OpenEvent(uri))
+          }
+
+          def onClose(code: Int, reason: String, remote: Boolean): Unit = {
+            QCoreApplication.postEvent(
+              jws,
+              CloseEvent(uri, code, reason, remote)
+            )
+          }
+
+          def onError(ex: Exception): Unit = {
+            QCoreApplication.postEvent(jws, ErrorEvent(uri, ex.toString))
+          }
+        }
+
+        map.get(uri) match {
+          case Some(ws) ⇒ ws.close()
+          case _ ⇒
+        }
+
+        map += uri → ws
+        ws.connect
+
+        uri
+      }
+
+      override def eventFilter(o: QObject, e: QEvent) = {
+        e match {
+          case OpenEvent(uri) ⇒ onOpen.emit(uri)
+          case MessageEvent(uri, msg) ⇒ onMessage.emit(uri, msg)
+          case CloseEvent(uri, code, reason, remote) ⇒
+            onClose.emit(uri, code, reason, remote)
+          case ErrorEvent(uri, ex) ⇒ onError.emit(uri, ex)
+          case _ ⇒
+        }
+
+        super.eventFilter(o, e)
+      }
+
+      installEventFilter(this)
+
+      def cleanUp() = {
+        removeEventFilter(this)
+        map.foreach(kv => kv._2.close())
+        map = Map()
       }
     }
 
@@ -98,6 +173,15 @@ object NotificaionUI {
     def setWindowObject() = {
       page.mainFrame.addToJavaScriptWindowObject("bridge", bridge)
       page.mainFrame.addToJavaScriptWindowObject("console", console)
+      if (websocket != null) {
+        websocket.cleanUp()
+        // NOTE: below will casue print
+        // QCoreApplication::postEvent: Unexpected null receiver
+        // ErrorEvent & CloseEvent each time.
+        websocket.dispose()
+      }
+      websocket = new WebSocket()
+      page.mainFrame.addToJavaScriptWindowObject("websocket", websocket)
     }
   }
 
