@@ -1,3 +1,4 @@
 *.jar
 /run.sh
 /tmp/
+*.class
