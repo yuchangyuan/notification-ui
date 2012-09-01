@@ -31,7 +31,7 @@ _n.window_show = function(vis) {
 }
 
 
-_n.create = function(c, serv) {
+_n.create = function(c, src) {
     /* check */
     if (c.command != "create") return false;
     if ((c.uuid === undefined) ||
@@ -57,7 +57,7 @@ _n.create = function(c, serv) {
         data[key] = c[key];
     }
     delete data.command;
-    data.server = serv;
+    data.src = src;
     _n.data[c.uuid] = data;
 
     // create top div
@@ -121,7 +121,7 @@ _n.create = function(c, serv) {
 
     // add status
     var nstatus = $("<div class='notification-status'></div>");
-    nstatus.append("<span>" + c.client + " - " + serv + "</span>");
+    nstatus.append("<span>" + c.client + " - " + src + "</span>");
     nstatus.append("<span style='position:absolute; right: 1em;'>" +
                    new Date(c.timestamp).toISOString() +
                    "</span>");
