@@ -18,10 +18,12 @@ _s.reconnect = function(url) {
 
     console.log("reconnect url = " + url);
  
-    socket.onopen = function () { _s.onopen(socket); }
-    socket.onmessage = function(m) { _s.onmessage(socket, m); }
-    socket.onclose = function() { _s.onclose(socket); }
-    socket.onerror = function() { _s.onerror(socket); }
+    socket.onopen = function (e) { _s.onopen(socket); }
+    socket.onmessage = function(e) {
+        _s.onmessage(socket, $.parseJSON(e.data));
+    };
+    socket.onclose = function(e) { _s.onclose(socket); }
+    socket.onerror = function(e) { _s.onerror(socket); }
 }
 
 _s.add_src = function(url) {    
