@@ -33,6 +33,13 @@ object NotificaionUI {
       }
     }
 
+    val console = new QObject {
+      def log(str: String) = {
+        System.err.println(str)
+        System.err.flush()
+      }
+    }
+
     // top window
     setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
     setAttribute(Qt.WidgetAttribute.WA_X11NetWmWindowTypeNotification)
@@ -90,6 +97,7 @@ object NotificaionUI {
 
     def setWindowObject() = {
       page.mainFrame.addToJavaScriptWindowObject("bridge", bridge)
+      page.mainFrame.addToJavaScriptWindowObject("console", console)
     }
   }
 
