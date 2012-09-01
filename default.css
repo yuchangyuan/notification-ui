@@ -6,6 +6,8 @@ body {
     
     /* for body height */
     float:left;
+
+    font-family: Georgia, Serif;
 }
 
 .notification {
