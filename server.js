@@ -13,8 +13,13 @@ _s.reconnect = function(url) {
     console.log("reconnect url = " + url);
 
     if (window.websocket !== undefined) {
-        var socket = window.websocket.createWebSocket(url);
-        _s.socket[url] = socket; // dummy string
+        window.websocket.create(url);
+        var s = {};
+        s.url = url;
+        s.send = function(str) { window.websocket.send(url, str); }
+        s.close = function() { window.websocket.close(url); }
+
+        _s.socket[url] = s;
     }
     else {
         var socket = new WebSocket(url);
@@ -24,7 +29,6 @@ _s.reconnect = function(url) {
             _s.socket[url].close();
         }
         _s.socket[url] = socket;
-
 
         socket.onopen = function (e) { _s.onopen(url); }
         socket.onmessage = function(e) {
@@ -43,8 +47,10 @@ _s.add_src = function(url) {
 
 _s.remove_src = function(url) {
     if (_s.socket[url] !== undefined) {
-        _s.socket[url].close();
+        var s = _s.socket[url];
         delete _s.socket[url];
+        s.close();
+
     }
 };
 
@@ -90,6 +96,7 @@ _s.onmessage = function(url, m) {
 _s.onclose = function(url) {
     console.log("onclose url = " + url);
 
+
     if (_s.state[url] == _s.OPEN) {
         var id = _u.create('source closed',
                            url,
@@ -98,6 +105,9 @@ _s.onclose = function(url) {
     }
 
     _s.state[url] = _s.CLOSED;
+
+    // check url
+    if (_s.socket[url] === undefined) return;
 
     // reconnect after 1 sec
     window.setTimeout(function() { _s.reconnect(url); },

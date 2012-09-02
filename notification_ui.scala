@@ -53,7 +53,7 @@ object NotificaionUI {
       case class ErrorEvent(uri: String, ex: String)
            extends QEvent(Type.CustomEnum)
 
-      def createWebSocket(uri: String): String = {
+      def create(uri: String): String = this.synchronized {
         val ws = new WebSocketClient(new URI(uri)) {
           def onMessage(msg: String): Unit = {
             QCoreApplication.postEvent(jws, MessageEvent(uri, msg))
@@ -84,6 +84,26 @@ object NotificaionUI {
         ws.connect
 
         uri
+      }
+
+      def send(uri: String, data: String): Boolean = this.synchronized {
+        map.get(uri) match {
+          case Some(ws) ⇒ ws.send(data); true
+          case _ ⇒ false
+        }
+      }
+
+      def close(uri: String): Boolean = this.synchronized {
+        map.get(uri) match {
+          case Some(ws) ⇒ {
+            ws.close()
+            map -= uri
+            true
+          }
+          case _ ⇒ {
+            false
+          }
+        }
       }
 
       override def eventFilter(o: QObject, e: QEvent) = {
