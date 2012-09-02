@@ -121,7 +121,7 @@ _n.create = function(c, src) {
 
     // add status
     var nstatus = $("<div class='notification-status'></div>");
-    nstatus.append("<span>" + c.client + " - " + src + "</span>");
+    nstatus.append("<span>" + src + " - " + c.client + "</span>");
     nstatus.append("<span style='position:absolute; right: 1em;'>" +
                    new Date(c.timestamp).toISOString() +
                    "</span>");
