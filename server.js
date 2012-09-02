@@ -31,9 +31,7 @@ _s.reconnect = function(url) {
         _s.socket[url] = socket;
 
         socket.onopen = function (e) { _s.onopen(url); }
-        socket.onmessage = function(e) {
-            _s.onmessage(url, $.parseJSON(e.data));
-        };
+        socket.onmessage = function(e) { _s.onmessage(url, e.data); };
         socket.onclose = function(e) { _s.onclose(url); }
         socket.onerror = function(e) { _s.onerror(url); }
     }
@@ -71,10 +69,12 @@ _s.onopen = function(url) {
     window.setTimeout(function() { _u.close(id); }, 10 * 1000);
 };
 
-_s.onmessage = function(url, m) {
+_s.onmessage = function(url, text) {
     if (_s.socket[url] === undefined) {
         return;
     }
+
+    var m = $.parseJSON(text);
 
     // TODO
     switch (m.command) {
