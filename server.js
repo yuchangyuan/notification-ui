@@ -75,6 +75,7 @@ _s.onmessage = function(url, text) {
     }
 
     var m = $.parseJSON(text);
+    console.log("onmessage " + url + " -> " + text);
 
     // TODO
     switch (m.command) {
