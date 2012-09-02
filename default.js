@@ -16,7 +16,10 @@ _n.window_fit = function() {
     if ($('div.notification').size() == 0) {
         _n.window_show(false);
         // NOTE: for debug, should toolbar again
-        window.setTimeout("_n.window_show(true);", 2000);
+        // window.setTimeout("_n.window_show(true);", 2000);
+    }
+    else {
+        _n.window_show(true);
     }
 }
 
@@ -239,4 +242,6 @@ _n.close = function(c) {
 $(function() {
     _n.window_reset();
     _n.window_fit();
+
+    _s.add_src("ws://127.0.0.1:7755");
 });
