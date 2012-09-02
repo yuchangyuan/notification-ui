@@ -79,7 +79,7 @@ _s.onmessage = function(url, m) {
     // TODO
     switch (m.command) {
     case 'create':
-        _n.create(m, s.src);
+        _n.create(m, url);
         break;
     case 'update':
         _n.update(m);
