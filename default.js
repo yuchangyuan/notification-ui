@@ -76,9 +76,9 @@ _n.create = function(c, src) {
     var nclose = $("<button class='close-button'></button>");
     nclose.click(function() {
         ndiv.hide("fast", function() {
-            $(this).remove();
-            delete _n.data[c.uuid];
-            _n.window_fit();
+            _n.close({'command': 'close',
+                      'uuid': c.uuid,
+                      'timestamp': new Date().getTime()});
         });
     });
     ndiv.append(nclose);
