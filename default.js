@@ -78,6 +78,7 @@ _n.create = function(c, src) {
         ndiv.hide("fast", function() {
             _n.close({'command': 'close',
                       'uuid': c.uuid,
+                      'reason': 2, // dismissed by user
                       'timestamp': new Date().getTime()});
         });
     });
@@ -231,6 +232,8 @@ _n.close = function(c) {
     if (c.command != "close") return false;
     if ((c.uuid === undefined) ||
         (c.timestamp === undefined)) return false;
+
+    if (c.reason == undefined) c.reason = 4;
 
     $("div#" + c.uuid).hide("fast", function() {
         $(this).remove();
