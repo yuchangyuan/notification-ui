@@ -15,8 +15,8 @@ _n.window_fit = function() {
 
     if ($('div.notification').size() == 0) {
         _n.window_show(false);
-        // NOTE: for debug, should toolbar again
-        // window.setTimeout("_n.window_show(true);", 2000);
+        $('div.toolbar').css('opacity', '0.25');
+        _n.focus_event_deactive();
     }
     else {
         _n.window_show(true);
@@ -52,7 +52,7 @@ _n.create = function(c, src) {
 
     if (!$.isArray(c.title_class) ||
         !$.isArray(c.body_class) ||
-        !$.isArray(c.notification_class)) return false;    
+        !$.isArray(c.notification_class)) return false;
 
     // save to _n.data
     var data = {};
@@ -87,18 +87,18 @@ _n.create = function(c, src) {
     // add title
     var ntitle_class = ["notification-title"];
     if ($.isArray(c.title_class)) {
-        ntitle_class = ntitle_class.concat(c.title_class);        
+        ntitle_class = ntitle_class.concat(c.title_class);
     }
     var ntitle = $("<div></div>");
     ntitle.attr("class", ntitle_class.join(" "));
     ntitle.append(c.title);
     ndiv.append(ntitle);
-    
+
     // add body
     if (c.body !== undefined) {
         var nbody_class = ['notification-body'];
         if ($.isArray(c.body_class)) {
-            nbody_class = nbody_class.concat(c.body_class);        
+            nbody_class = nbody_class.concat(c.body_class);
         }
         var nbody = $("<div></div>");
         nbody.attr("class", nbody_class.join(" "));
@@ -168,14 +168,14 @@ _n.update = function(c) {
         ntitle.attr("class", ntitle_class.join(" "));
         _n.data[c.uuid].title_class = c.title_class;
     }
-    
+
     // update title
     if (c.title !== undefined) {
         ntitle.empty();
         ntitle.append(c.title);
         _n.data[c.uuid].title = c.title;
     }
-    
+
     // update body
     var nbody = $("div.notification-body", ndiv);
 
@@ -190,7 +190,7 @@ _n.update = function(c) {
         nbody.empty();
         nbody.append(c.body);
         _n.data[c.uuid].body = c.body;
-        
+
         // replace button id
         $("button", nbody).each(function (i) {
             var id = $(this).attr("id");
@@ -242,9 +242,45 @@ _n.close = function(c) {
     });
 };
 
+_n.focus_event_active = function() {
+    if (_n.focus_event_id === undefined) {
+        _n.focus_event_id = window.setInterval(_n.focus_event_tick, 1000);
+    }
+};
+
+_n.focus_event_deactive = function() {
+    if (_n.focus_event_id !== undefined) {
+        window.clearInterval(_n.focus_event_id);
+        delete _n.focus_event_id;
+    }
+}
+
+_n.focus_event_tick = function() {
+    console.log("tick --");
+}
+
+_n.init_toolbar = function() {
+    var toolbar = $('div.toolbar');
+
+    toolbar.css('opacity', '0.25');
+
+    $('body').hover(function() {
+        console.log(".. mouse in");
+        toolbar.css('opacity', '1.0');
+        _n.focus_event_active();
+    }, function() {
+        console.log(".. mouse out");
+        toolbar.css('opacity', '0.25');
+        _n.focus_event_deactive();
+    });
+
+};
+
 $(function() {
     _n.window_reset();
     _n.window_fit();
+
+    _n.init_toolbar();
 
     _s.add_src("ws://127.0.0.1:7755");
 });
