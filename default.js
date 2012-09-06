@@ -298,5 +298,10 @@ $(function() {
 
     _n.init_toolbar();
 
-    _s.add_src("ws://127.0.0.1:7755");
+    if (window.websocket !== undefined) {
+        window.websocket.connectAll();
+    }
+    else {
+        _s.add_src("ws://127.0.0.1:7755");
+    }
 });

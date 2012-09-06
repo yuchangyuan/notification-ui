@@ -21,7 +21,7 @@ object NotificaionUI {
     }
   }
 
-  class TopWindow extends QWebView {
+  class TopWindow(srcList: List[String]) extends QWebView {
     val bridge = new QObject {
       def func() = {
         println("func called")
@@ -103,6 +103,13 @@ object NotificaionUI {
           case _ ⇒ {
             false
           }
+        }
+      }
+
+      def connectAll() = {
+        for (src ← srcList) {
+          page.mainFrame.evaluateJavaScript("_s.add_src(\"" +
+            src + "\");")
         }
       }
 
@@ -209,11 +216,11 @@ object NotificaionUI {
   def main(args: Array[String]): Unit = {
     val app = new QApplication(args)
 
-    val win = new TopWindow
-    if (args.size == 0)
-      win.load(new QUrl((new File("index.html")).toURI.toString))
-    else
-      win.load(new QUrl(args(0)))
+    var srcList = args.toList
+    if (srcList.size == 0) { srcList ::= "ws://127.0.0.1:7755" }
+
+    val win = new TopWindow(srcList)
+    win.load(new QUrl((new File("index.html")).toURI.toString))
 
     app.exec()
   }
