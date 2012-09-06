@@ -256,6 +256,7 @@ _n.close = function(c) {
 
 _n.focus_event_active = function() {
     if (_n.focus_event_id === undefined) {
+        _n.focus_event_tick();
         _n.focus_event_id = window.setInterval(_n.focus_event_tick, 1000);
     }
 };
