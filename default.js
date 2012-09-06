@@ -257,6 +257,10 @@ _n.focus_event_deactive = function() {
 
 _n.focus_event_tick = function() {
     console.log("tick --");
+
+    for (var url in _s.socket) {
+        _s.socket[url].send(JSON.stringify({'event': 'focused'}));
+    }
 }
 
 _n.init_toolbar = function() {
