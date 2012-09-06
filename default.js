@@ -235,6 +235,18 @@ _n.close = function(c) {
 
     if (c.reason == undefined) c.reason = 4;
 
+    // send event
+    if (_n.data[c.uuid] !== undefined) {
+        var url = _n.data[c.uuid].src;
+        if (_s.socket[url] !== undefined) {
+            _s.socket[url].send(JSON.stringify({
+                'event': 'closed',
+                'uuid': c.uuid,
+                'reason': c.reason
+            }));
+        }
+    }
+
     $("div#" + c.uuid).hide("fast", function() {
         $(this).remove();
         delete _n.data[c.uuid];
