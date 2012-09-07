@@ -88,7 +88,15 @@ object NotificaionUI {
 
       def send(uri: String, data: String): Boolean = this.synchronized {
         map.get(uri) match {
-          case Some(ws) ⇒ ws.send(data); true
+          case Some(ws) ⇒ {
+            try {
+              ws.send(data);
+              true
+            }
+            catch {
+              case _ ⇒ false
+            }
+          }
           case _ ⇒ false
         }
       }
