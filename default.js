@@ -10,7 +10,15 @@ _n.window_reset = function() {
 _n.window_fit = function() {
     var h = document.body.offsetHeight + 5;
     var h_max = window.screen.height - 40;
-    if (h > h_max) h = h_max;
+    if (h > h_max) {
+        h = h_max;
+        $('body').css('overflow-y', 'auto');
+    }
+    else {
+        // never show y-scroll
+        $('body').css('overflow-y', 'hidden');
+    }
+
     window.resizeTo(430, h);
 
     if ($('div.notification').size() == 0) {
