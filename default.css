@@ -36,6 +36,9 @@ body {
 .notification-body {
     padding-left: 1em;
     padding-right: 1em;
+
+    /* ensure the height is sufficient to contain all sub div */
+    overflow: auto;
 }
 
 .notification-status {
