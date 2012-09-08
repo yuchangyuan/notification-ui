@@ -41,6 +41,32 @@ _n.window_show = function(vis) {
     window.bridge.setVisible(vis);
 }
 
+_n.replace_id = function(context, elem, uuid) {
+    var callback = function(id) {
+        return function() {
+            console.log(uuid + ":" + id + " clicked");
+            if (_n.data[uuid] !== undefined) {
+                var url = _n.data[uuid].src;
+                if (_s.socket[url] !== undefined) {
+                    _s.socket[url].send(JSON.stringify({
+                        'event': 'clicked',
+                        'uuid': uuid,
+                        'id': id
+                    }));
+                }
+            }
+        }
+    };
+
+    // replace button id
+    $(elem, context).each(function (i) {
+        var id = $(this).attr("id");
+        if (id === "") { id = "__" + elem + i; }
+        $(this).attr("id", uuid + "_" + id);
+
+        $(this).click(callback(id));
+    });
+}
 
 _n.create = function(c, src) {
     /* check */
@@ -112,21 +138,8 @@ _n.create = function(c, src) {
         nbody.attr("class", nbody_class.join(" "));
         nbody.append(c.body);
 
-        // replace button id
-        $("button", nbody).each(function (i) {
-            var id = $(this).attr("id");
-            if (id === "") { id = "__button" + i; }
-            id = c.uuid + "_" + id;
-            $(this).attr("id", id);
-        });
-
-        // replace link
-        $("a", nbody).each(function (i) {
-            var id = $(this).attr("id");
-            if (id === "") { id = "__a" + i; }
-            id = c.uuid + "_" + id;
-            $(this).attr("id", id);
-        });
+        _n.replace_id(nbody, "button", c.uuid);
+        _n.replace_id(nbody, "a", c.uuid);
 
         ndiv.append(nbody);
     }
@@ -199,21 +212,8 @@ _n.update = function(c) {
         nbody.append(c.body);
         _n.data[c.uuid].body = c.body;
 
-        // replace button id
-        $("button", nbody).each(function (i) {
-            var id = $(this).attr("id");
-            if (id === "") { id = "__button" + i; }
-            id = c.uuid + "_" + id;
-            $(this).attr("id", id);
-        });
-
-        // replace link
-        $("a", nbody).each(function (i) {
-            var id = $(this).attr("id");
-            if (id === "") { id = "__a" + i; }
-            id = c.uuid + "_" + id;
-            $(this).attr("id", id);
-        });
+        _n.replace_id(nbody, "button", c.uuid);
+        _n.replace_id(nbody, "a", c.uuid);
     }
 
     if ($.isArray(c.body_class)) {
