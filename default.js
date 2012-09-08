@@ -61,7 +61,9 @@ _n.replace_id = function(context, elem, uuid) {
     // replace button id
     $(elem, context).each(function (i) {
         var id = $(this).attr("id");
-        if (id === "") { id = "__" + elem + i; }
+        if ((id === "") || (id === undefined)) {
+            id = "__" + elem + i;
+        }
         $(this).attr("id", uuid + "_" + id);
 
         $(this).click(callback(id));
