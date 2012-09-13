@@ -110,6 +110,28 @@ button:active {
     height: 1.5em;
 }
 
+.collapsed {
+    border-radius: 0.2em;
+
+    border-style: solid;
+    border-width: 1px;
+
+    padding: 0em;
+
+    border-color: rgba(255,255,255, 0.4);
+}
+
+.collapsed div {
+    padding: 0.4em;
+}
+
+.collapsed div:first-child {
+    background-color: rgba(255,255,255, 0.2);
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+}
+
+
 /* default theme */
 .notification {
     border-color: rgba(0, 0, 255, 0.85);

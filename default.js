@@ -70,6 +70,23 @@ _n.replace_id = function(context, elem, uuid) {
     });
 }
 
+_n.process_collapsed = function(context) {
+    // for each elem of collapsed class
+    // 1. 1st div on click will toggle 2nd show
+    // 2. 2nd div is hide default
+    $(".collapsed", context).each(function(i) {
+        var c = $(this);
+        var header = $("div:first-child", c);
+        var body = $("div:nth-child(2)", c);
+
+        body.hide();
+
+        header.click(function() { 
+            body.toggle(0, function() { _n.window_fit(); });
+        });
+    });
+}
+
 _n.create = function(c, src) {
     /* check */
     if (c.command != "create") return false;
@@ -142,6 +159,8 @@ _n.create = function(c, src) {
 
         _n.replace_id(nbody, "button", c.uuid);
         _n.replace_id(nbody, "a", c.uuid);
+
+        _n.process_collapsed(nbody);
 
         ndiv.append(nbody);
     }
@@ -216,6 +235,7 @@ _n.update = function(c) {
 
         _n.replace_id(nbody, "button", c.uuid);
         _n.replace_id(nbody, "a", c.uuid);
+        _n.process_collapsed(nbody);
     }
 
     if ($.isArray(c.body_class)) {
