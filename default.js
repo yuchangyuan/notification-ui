@@ -137,6 +137,9 @@ _n.create = function(c, src) {
     });
     ndiv.append(nclose);
 
+    // add life down counter
+    ndiv.append($("<div class='lifetime-counter'></div>"));
+
     // add title
     var ntitle_class = ["notification-title"];
     if ($.isArray(c.title_class)) {
@@ -283,6 +286,19 @@ _n.close = function(c) {
         _n.window_fit();
     });
 };
+
+_n.status = function(c) {
+    if (c.command != "status") return false;
+    if ((c.uuid === undefined) ||
+        (c.lifetime === undefined)) return false;
+
+    var n = $("div#" + c.uuid);
+    var lc = $(".lifetime-counter", n)
+    var t = parseInt((c.lifetime + 500.0) / 1000.0);
+    lc.empty();
+    lc.append(t.toString());
+}
+
 
 _n.focus_event_active = function() {
     if (_n.focus_event_id === undefined) {

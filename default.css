@@ -1,7 +1,7 @@
 body {
     margin: 0px;
     width: 400px;
-    
+
     /* background-color: rgba(255, 255, 255, 0.1); */
     font-family: Georgia, Serif;
 }
@@ -78,6 +78,24 @@ button:active {
 }
 
 
+.lifetime-counter {
+    position: absolute;
+    right: 1em;
+    top: 2em;
+    height: 1em;
+
+    color: rgba(0,0,0, 0.3);
+
+    font-size: 0.75em;
+    font-family: Arial, Sans-Serif;
+    font-style: italic;
+
+    padding: 0px;
+}
+
+
+
+
 .toolbar {
     border-radius: 0.5em;
 
@@ -101,7 +119,7 @@ button:active {
 .toolbar a {
     padding: 0em 0.5em 0em 0.5em;
     margin: 0em 0.2em 0em 0.2em;
-    
+
     background-color: rgba(255, 255, 255, 0.2);
     text-decoration: none;
 }

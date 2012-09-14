@@ -88,8 +88,8 @@ _s.onmessage = function(url, text) {
     case 'close':
         _n.close(m);
         break;
-    case 'list':
-        // initial data
+    case 'status':
+        _n.status(m);
         break;
     }
 };
