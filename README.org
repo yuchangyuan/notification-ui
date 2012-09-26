@@ -10,10 +10,10 @@ An application that show some notifications on desktop.
 * TODO Run
 * Screenshot
 ** Urgency level and markup
-http://imageshack.us/a/img515/8905/notificationui0.png
+[[http://imageshack.us/a/img515/8905/notificationui0.png]]
 ** Action
-http://imageshack.us/a/img835/4177/notificationui1.png
+[[http://imageshack.us/a/img835/4177/notificationui1.png]]
 ** Icon
-http://imageshack.us/a/img88/3333/notificationui2.png
+[[http://imageshack.us/a/img88/3333/notificationui2.png]]
 ** Scroll
-http://imageshack.us/a/img593/8637/notificationui3.png
+[[http://imageshack.us/a/img593/8637/notificationui3.png]]
