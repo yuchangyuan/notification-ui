@@ -8,3 +8,12 @@ An application that show some notifications on desktop.
 - qtjambi 4.7
 - scala 2.9.1
 * TODO Run
+* Screenshot
+** Urgency level and markup
+http://imageshack.us/a/img515/8905/notificationui0.png
+** Action
+http://imageshack.us/a/img835/4177/notificationui1.png
+** Icon
+http://imageshack.us/a/img88/3333/notificationui2.png
+** Scroll
+http://imageshack.us/a/img593/8637/notificationui3.png
