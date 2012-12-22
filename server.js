@@ -9,8 +9,13 @@ _s.state = {};
 _s.OPEN = 1;
 _s.CLOSED = 2;
 
+_s.alive = {};
+
 _s.reconnect = function(url) {
     console.log("reconnect url = " + url);
+
+    // avoid infinite loop
+    if ((_s.socket[url] !== undefined) && (_s.state[url] == _s.OPEN)) return;
 
     if (window.websocket !== undefined) {
         window.websocket.create(url);
@@ -60,6 +65,7 @@ _s.onopen = function(url) {
         return;
     }
 
+    _s.alive[url] = true;
     _s.state[url] = _s.OPEN;
 
     var id = _u.create('source connected',
@@ -73,6 +79,10 @@ _s.onmessage = function(url, text) {
     if (_s.socket[url] === undefined) {
         return;
     }
+
+    _s.alive[url] = true;
+
+    if (text == "") return;
 
     var m = $.parseJSON(text);
     console.log("onmessage " + url + " -> " + text);
@@ -127,3 +137,24 @@ if (window.websocket !== undefined) {
     window.websocket.onClose.connect(_s.onclose);
     window.websocket.onError.connect(_s.onerror);
 }
+
+$(function() {
+    // check server alive every 15 sec
+    window.setInterval(function() {
+        console.log("check alive...");
+        $.map(_s.alive, function(status, url) {
+            if ((_s.state[url] == _s.OPEN) && _s.socket[url] != null) {
+                if (status == false) {
+                    _s.socket[url].close();
+                    _s.reconnect(url);
+                }
+                else {
+                    console.log(url + " alive.");
+                    _s.alive[url] = false
+                    // keep alive
+                    _s.socket[url].send("");
+                }
+            }
+        });
+    }, 15 * 1000);
+});
