@@ -104,18 +104,21 @@ _s.onmessage = function(url, text) {
     }
 };
 
-_s.onclose = function(url) {
-    console.log("onclose url = " + url);
-
-
+_s.set_close = function(url) {
     if (_s.state[url] == _s.OPEN) {
         var id = _u.create('source closed',
                            url,
                            ['critical-urgency']);
-        window.setTimeout(function() { _u.close(id); }, 10 * 1000);
+        // keep open
+        // window.setTimeout(function() { _u.close(id); }, 10 * 1000);
     }
-
     _s.state[url] = _s.CLOSED;
+}
+
+_s.onclose = function(url) {
+    console.log("onclose url = " + url);
+
+    _s.set_close(url)
 
     // check url
     if (_s.socket[url] === undefined) return;
@@ -145,6 +148,7 @@ $(function() {
         $.map(_s.alive, function(status, url) {
             if ((_s.state[url] == _s.OPEN) && _s.socket[url] != null) {
                 if (status == false) {
+                    _s.set_close(url);
                     _s.socket[url].close();
                     _s.reconnect(url);
                 }
