@@ -2,3 +2,7 @@
 /run.sh
 /tmp/
 *.class
+*.o
+/Makefile
+/moc_*.cpp
+/notification-ui
