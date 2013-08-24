@@ -13,7 +13,8 @@ MainWindow::MainWindow()
   : QWebView()
 {
   // set window
-  setAttribute(Qt::WA_TranslucentBackground);
+  setAttribute(Qt::WA_TranslucentBackground |
+               Qt::WA_MacAlwaysShowToolWindow);
 
   setWindowFlags(Qt::FramelessWindowHint |
                  Qt::WindowShadeButtonHint |
