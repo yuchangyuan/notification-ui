@@ -6,3 +6,6 @@
 /Makefile
 /moc_*.cpp
 /notification-ui
+/*.app
+/.qmake.*
+/*.pro.user*
