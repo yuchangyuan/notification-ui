@@ -8,3 +8,8 @@ INCLUDEPATH += .
 # Input
 HEADERS += mainwindow.h
 SOURCES += main.cpp mainwindow.cpp
+
+# mac
+macx {
+    LIBS += -lobjc
+}
