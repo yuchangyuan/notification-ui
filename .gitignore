@@ -9,3 +9,4 @@
 /*.app
 /.qmake.*
 /*.pro.user*
+.DS_Store
