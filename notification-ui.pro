@@ -6,8 +6,8 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += mainwindow.h
-SOURCES += main.cpp mainwindow.cpp
+HEADERS += mainwindow.h bridge.h
+SOURCES += main.cpp bridge.cpp mainwindow.cpp
 
 # mac
 macx {

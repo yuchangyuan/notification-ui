@@ -46,6 +46,10 @@ MainWindow::MainWindow()
     connect(this->page(), SIGNAL(geometryChangeRequested(const QRect &)),
             SLOT(geometryChange(const QRect &)));
 
+    // bridge object
+    bridge = new Bridge(this);
+    this->page()->mainFrame()->addToJavaScriptWindowObject("bridge", bridge);
+
     //resize(430, 400);
     setGeometry(QRect(400, 10, 430, 400));
 
@@ -55,6 +59,11 @@ MainWindow::MainWindow()
     //setStyleSheet("background:rgba(255,255,255,0);");
     setStyleSheet("background:rgba(255,255,255,0.01);"); // hack
     setRenderHints(QPainter::TextAntialiasing);
+}
+
+MainWindow::~MainWindow()
+{
+    delete bridge;
 }
 
 void MainWindow::finishLoading(bool)
