@@ -81,7 +81,7 @@ _n.process_collapsed = function(context) {
 
         body.hide();
 
-        header.click(function() { 
+        header.click(function() {
             body.toggle(0, function() { _n.window_fit(); });
         });
     });
@@ -350,5 +350,6 @@ $(function() {
     }
     else {
         _s.add_src("ws://127.0.0.1:7755");
+        _s.add_src("ws://192.168.1.14:7765");
     }
 });
