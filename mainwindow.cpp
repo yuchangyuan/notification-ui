@@ -24,7 +24,7 @@ MainWindow::MainWindow()
     setWindowFlags(Qt::FramelessWindowHint |
                    Qt::WindowShadeButtonHint |
                    Qt::WindowStaysOnTopHint |
-                   Qt::Drawer);
+                   Qt::SplashScreen);
 
 #ifdef Q_OS_MAC
     // make window sticky on mac os x
