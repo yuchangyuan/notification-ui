@@ -7,6 +7,8 @@ An application that show some notifications on desktop.
 * Prerequest
 - qtjambi 4.7
 - scala 2.9.1
+** cpp branch
+For cpp branch, only Qt5 is necessary.
 * TODO Run
 * Screenshot
 ** Urgency level and markup
