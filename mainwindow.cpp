@@ -18,8 +18,9 @@ MainWindow::MainWindow()
     : QWebView()
 {
     // set window
-    setAttribute((Qt::WidgetAttribute)(Qt::WA_TranslucentBackground |
-                                       Qt::WA_MacAlwaysShowToolWindow));
+    setAttribute((Qt::WidgetAttribute)(Qt::WA_TranslucentBackground));
+    setAttribute((Qt::WidgetAttribute)(Qt::WA_MacAlwaysShowToolWindow));
+
 
     setWindowFlags(Qt::FramelessWindowHint |
                    Qt::WindowShadeButtonHint |
@@ -75,3 +76,18 @@ void MainWindow::geometryChange(const QRect &geom)
 {
     setGeometry(geom);
 }
+
+/*
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+}
+
+void MainWindow::focusInEvent(QFocusEvent *event)
+{
+
+}
+
+void MainWindow::focusOutEvent(QFocusEvent *event)
+{
+}
+*/

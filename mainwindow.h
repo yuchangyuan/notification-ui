@@ -17,6 +17,8 @@ public:
 protected slots:
     void finishLoading(bool);
     void geometryChange(const QRect &);
-
+    //void keyPressEvent(QKeyEvent *);
+    //void focusInEvent(QFocusEvent *);
+    //void focusOutEvent(QFocusEvent *);
 private:
 };
