@@ -60,6 +60,11 @@ MainWindow::MainWindow()
     //setStyleSheet("background:rgba(255,255,255,0);");
     setStyleSheet("background:rgba(255,255,255,0.01);"); // hack
     setRenderHints(QPainter::TextAntialiasing);
+
+    // timer
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
+    timer->start(250);
 }
 
 MainWindow::~MainWindow()
@@ -75,6 +80,15 @@ void MainWindow::finishLoading(bool)
 void MainWindow::geometryChange(const QRect &geom)
 {
     setGeometry(geom);
+}
+
+
+void MainWindow::tick()
+{
+    if (isVisible()) {
+        // qDebug() << "tick";
+        raise();
+    }
 }
 
 /*
