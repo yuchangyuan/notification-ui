@@ -1,3 +1,5 @@
+#ifndef _MAINWINDOW_H_
+#define _MAINWINDOW_H_
 
 // #include <QtWebKit>
 // for qt5
@@ -20,3 +22,5 @@ protected slots:
 
 private:
 };
+
+#endif
