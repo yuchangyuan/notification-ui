@@ -18,13 +18,14 @@ MainWindow::MainWindow()
     : QWebView()
 {
     // set window
-    setAttribute((Qt::WidgetAttribute)(Qt::WA_TranslucentBackground |
-                                       Qt::WA_MacAlwaysShowToolWindow));
+    setAttribute((Qt::WidgetAttribute)(Qt::WA_TranslucentBackground));
+    setAttribute((Qt::WidgetAttribute)(Qt::WA_MacAlwaysShowToolWindow));
+
 
     setWindowFlags(Qt::FramelessWindowHint |
                    Qt::WindowShadeButtonHint |
                    Qt::WindowStaysOnTopHint |
-                   Qt::SplashScreen);
+                   Qt::ToolTip);
 
 #ifdef Q_OS_MAC
     // make window sticky on mac os x
@@ -59,6 +60,11 @@ MainWindow::MainWindow()
     //setStyleSheet("background:rgba(255,255,255,0);");
     setStyleSheet("background:rgba(255,255,255,0.01);"); // hack
     setRenderHints(QPainter::TextAntialiasing);
+
+    // timer
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
+    timer->start(250);
 }
 
 MainWindow::~MainWindow()
@@ -75,3 +81,27 @@ void MainWindow::geometryChange(const QRect &geom)
 {
     setGeometry(geom);
 }
+
+
+void MainWindow::tick()
+{
+    if (isVisible()) {
+        // qDebug() << "tick";
+        raise();
+    }
+}
+
+/*
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+}
+
+void MainWindow::focusInEvent(QFocusEvent *event)
+{
+
+}
+
+void MainWindow::focusOutEvent(QFocusEvent *event)
+{
+}
+*/
