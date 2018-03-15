@@ -12,3 +12,4 @@
 .DS_Store
 /build
 /__nix*
+/result

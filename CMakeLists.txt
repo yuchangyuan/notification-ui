@@ -17,3 +17,9 @@ add_executable(notification-ui
 
 target_link_libraries ( notification-ui
     Qt5::Widgets Qt5::WebKitWidgets )
+
+# ----------- install
+INSTALL(TARGETS notification-ui RUNTIME DESTINATION bin)
+INSTALL(PROGRAMS notification-ui.sh DESTINATION bin)
+INSTALL(DIRECTORY html DESTINATION share/notification-ui)
+INSTALL(DIRECTORY emacs DESTINATION share/notification-ui)
